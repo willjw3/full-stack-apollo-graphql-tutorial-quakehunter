@@ -1,0 +1,19 @@
+{
+  "name": "quakehunter",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "server": "cd server && nodemon index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "apollo-datasource": "^0.6.1",
+    "apollo-datasource-rest": "^0.6.1",
+    "apollo-server": "^2.8.1",
+    "graphql": "^14.4.2"
+  }
+}
