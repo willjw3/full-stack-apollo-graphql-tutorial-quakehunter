@@ -9,7 +9,29 @@ const UserAPI = require("./datasources/user")
 const store = createStore()
 
 
-const server = new ApolloServer({ 
+const server = new ApolloServer({
+    context: async ({ req }) => {
+        // simple auth check on every request
+        const auth = (req.headers && req.headers.authorization) || '';
+        const email = Buffer.from(auth, 'base64').toString('ascii');
+
+        // find a user by their email
+        const usercheck = await store.users.map(user => {
+            if (email === user.email) {
+                return user
+            }
+        });
+
+        let users = []
+        await usercheck.forEach(elem => {
+            if (elem) {
+                users.push(elem)
+            }
+        })
+        const user = users && users[0] ? users[0] : null;
+    
+        return { user };
+      }, 
     typeDefs,
     resolvers,
     dataSources: () => ({
