@@ -1,6 +1,7 @@
 const { ApolloServer } = require('apollo-server');
 const typeDefs = require('./schema');
 const resolvers = require('./resolvers');
+const jwt = require("jsonwebtoken")
 const { createStore } = require("./utils")
 
 const QuakeAPI = require('./datasources/quake');
@@ -13,8 +14,19 @@ const server = new ApolloServer({
     context: async ({ req }) => {
         // simple auth check on every request
         const auth = (req.headers && req.headers.authorization) || '';
-        const email = Buffer.from(auth, 'base64').toString('ascii');
+        let email = ""
+        let token = ""
 
+        const getToken = () => {
+            return auth.split(" ")[1]
+        }
+        if (auth.length && auth.split(" ")[1]) {
+            token = getToken()
+        }
+        if (token !== "") {
+            email = jwt.verify(token, "secret_key").email
+        }
+        
         // find a user by their email
         const usercheck = await store.users.map(user => {
             if (email === user.email) {
@@ -29,7 +41,6 @@ const server = new ApolloServer({
             }
         })
         const user = users && users[0] ? users[0] : null;
-    
         return { user };
       }, 
     typeDefs,

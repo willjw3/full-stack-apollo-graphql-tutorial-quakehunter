@@ -1,4 +1,5 @@
 const { paginateResults } = require('./utils');
+const jwt = require("jsonwebtoken")
 
 module.exports = {
     Query: {
@@ -30,7 +31,13 @@ module.exports = {
     Mutation: {
       login: async (_, { email }, { dataSources }) => {
         const user = await dataSources.userAPI.getUser({ email });
-        if (user) return Buffer.from(email).toString('base64');
+        if (user) {
+          const token = jwt.sign({ id: user.id, email: user.email}, "secret_key", { expiresIn: 60 * 60 });
+          return token
+        }
+        if (!user) {
+          console.log("User not in database.")
+        }
       },
       saveRecord: async (_, { recordId }, { dataSources }) => {
         const results = await dataSources.userAPI.saveRecord({recordId})

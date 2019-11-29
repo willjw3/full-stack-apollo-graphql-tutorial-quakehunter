@@ -5,6 +5,8 @@
   "main": "index.js",
   "scripts": {
     "server": "cd server && nodemon index.js",
+    "react-start": "cd client && npm start",
+    "dev": "concurrently \"npm run server\" \"npm run react-start\"",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
@@ -14,6 +16,10 @@
     "apollo-datasource": "^0.6.1",
     "apollo-datasource-rest": "^0.6.1",
     "apollo-server": "^2.8.1",
-    "graphql": "^14.4.2"
+    "graphql": "^14.4.2",
+    "jsonwebtoken": "^8.5.1"
+  },
+  "devDependencies": {
+    "concurrently": "^5.0.0"
   }
 }
