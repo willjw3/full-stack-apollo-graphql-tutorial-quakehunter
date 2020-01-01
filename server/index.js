@@ -26,6 +26,7 @@ const server = new ApolloServer({
         if (token !== "") {
             email = jwt.verify(token, "secret_key").email
         }
+
         
         // find a user by their email
         const usercheck = await store.users.map(user => {

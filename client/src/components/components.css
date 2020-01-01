@@ -15,3 +15,21 @@
 h1 {
     margin: 0;
 }
+
+.loginform {
+    width: 40%;
+    margin: auto;
+}
+input, label {
+    display: block;
+}
+.form-group {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    height: 200px;
+}
+
+.btn {
+    width: 100px;
+}

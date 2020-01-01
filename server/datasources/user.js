@@ -27,13 +27,13 @@ class UserAPI extends DataSource {
          return users
      }
 
-     async getUser({email: emailArg}) {
+     async getUser({email: emailArg, password: passwordArg}) {
          let index = 0
          const email = this.context && this.context.user ?
          this.context.user.email : emailArg
 
          const theUser = this.store.users.map(user => {
-             if (email === user.email) {
+             if (email === user.email && passwordArg === user.password) {
                  index = this.store.users.indexOf(user)
                  return user
              }
